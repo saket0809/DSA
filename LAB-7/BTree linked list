@@ -1,0 +1,184 @@
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.left = None
+        self.right = None
+
+
+class BinaryTree:
+    def __init__(self):
+        self.root = None
+
+    # Insertion
+    def insert(self, data):
+        new = Node(data)
+
+        if self.root is None:
+            self.root = new
+            return
+
+        q = [self.root]
+
+        while q:
+            temp = q.pop(0)
+
+            if temp.left is None:
+                temp.left = new
+                return
+            else:
+                q.append(temp.left)
+
+            if temp.right is None:
+                temp.right = new
+                return
+            else:
+                q.append(temp.right)
+
+    # Searching
+    def search(self, root, key):
+        if root is None:
+            return False
+
+        if root.data == key:
+            return True
+
+        return (self.search(root.left, key) or
+                self.search(root.right, key))
+
+    # Deletion
+    def delete(self, key):
+        if self.root is None:
+            print("Tree is empty")
+            return
+
+        q = [self.root]
+        target = None
+        last = None
+        parent = None
+
+        while q:
+            temp = q.pop(0)
+
+            if temp.data == key and target is None:
+                target = temp
+
+            if temp.left:
+                parent = temp
+                q.append(temp.left)
+
+            if temp.right:
+                parent = temp
+                q.append(temp.right)
+
+            last = temp
+
+        if target is None:
+            print("Element not found")
+            return
+
+        if target == last:
+            if target == self.root:
+                self.root = None
+            elif parent.left == last:
+                parent.left = None
+            else:
+                parent.right = None
+        else:
+            target.data = last.data
+
+            if parent.left == last:
+                parent.left = None
+            else:
+                parent.right = None
+
+        print("Deleted:", key)
+
+    # Inorder
+    def inorder(self, root):
+        if root:
+            self.inorder(root.left)
+            print(root.data, end=" ")
+            self.inorder(root.right)
+
+    # Preorder
+    def preorder(self, root):
+        if root:
+            print(root.data, end=" ")
+            self.preorder(root.left)
+            self.preorder(root.right)
+
+    # Postorder
+    def postorder(self, root):
+        if root:
+            self.postorder(root.left)
+            self.postorder(root.right)
+            print(root.data, end=" ")
+
+    # Display
+    def display(self):
+        if self.root is None:
+            print("Tree is empty")
+            return
+
+        q = [self.root]
+
+        while q:
+            temp = q.pop(0)
+            print(temp.data, end=" ")
+
+            if temp.left:
+                q.append(temp.left)
+
+            if temp.right:
+                q.append(temp.right)
+
+
+bt = BinaryTree()
+
+while True:
+    print("\n1.Insert")
+    print("2.Delete")
+    print("3.Search")
+    print("4.Inorder")
+    print("5.Preorder")
+    print("6.Postorder")
+    print("7.Display")
+    print("8.Exit")
+
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        bt.insert(int(input("Enter value: ")))
+
+    elif ch == 2:
+        bt.delete(int(input("Enter value: ")))
+
+    elif ch == 3:
+        key = int(input("Enter value: "))
+        if bt.search(bt.root, key):
+            print("Element found")
+        else:
+            print("Element not found")
+
+    elif ch == 4:
+        bt.inorder(bt.root)
+        print()
+
+    elif ch == 5:
+        bt.preorder(bt.root)
+        print()
+
+    elif ch == 6:
+        bt.postorder(bt.root)
+        print()
+
+    elif ch == 7:
+        bt.display()
+        print()
+
+    elif ch == 8:
+        break
+
+    else:
+        print("Invalid choice")
