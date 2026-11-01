@@ -1,0 +1,84 @@
+
+class BinaryTree:
+    def __init__(self):
+        self.tree = []
+
+    def insert(self, value):
+        self.tree.append(value)
+        print("Inserted:", value)
+
+    def delete(self, value):
+        if value in self.tree:
+            i = self.tree.index(value)
+            self.tree[i] = self.tree[-1]
+            self.tree.pop()
+            print("Deleted:", value)
+        else:
+            print("Element not found")
+
+    def search(self, value):
+        if value in self.tree:
+            print("Element found")
+        else:
+            print("Element not found")
+
+    def display(self):
+        print("Tree:", self.tree)
+
+    def inorder(self, i=0):
+        if i < len(self.tree):
+            self.inorder(2*i+1)
+            print(self.tree[i], end=" ")
+            self.inorder(2*i+2)
+
+    def preorder(self, i=0):
+        if i < len(self.tree):
+            print(self.tree[i], end=" ")
+            self.preorder(2*i+1)
+            self.preorder(2*i+2)
+
+    def postorder(self, i=0):
+        if i < len(self.tree):
+            self.postorder(2*i+1)
+            self.postorder(2*i+2)
+            print(self.tree[i], end=" ")
+
+
+bt = BinaryTree()
+
+while True:
+    print("\n1.Insert  2.Delete  3.Search")
+    print("4.Display  5.Inorder  6.Preorder")
+    print("7.Postorder  8.Exit")
+
+    ch = int(input("Enter choice: "))
+
+    if ch == 1:
+        bt.insert(int(input("Enter value: ")))
+
+    elif ch == 2:
+        bt.delete(int(input("Enter value: ")))
+
+    elif ch == 3:
+        bt.search(int(input("Enter value: ")))
+
+    elif ch == 4:
+        bt.display()
+
+    elif ch == 5:
+        bt.inorder()
+        print()
+
+    elif ch == 6:
+        bt.preorder()
+        print()
+
+    elif ch == 7:
+        bt.postorder()
+        print()
+
+    elif ch == 8:
+        break
+
+    else:
+        print("Invalid choice")
